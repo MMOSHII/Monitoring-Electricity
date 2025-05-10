@@ -1,74 +1,63 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const rooms = [
+  { title: 'Kamar Anak 1', usage: 20.2 },
+  { title: 'Ruang Tamu', usage: 38.7 },
+  { title: 'Kamar Anak 2', usage: 20.2 },
+  { title: 'Dapur', usage: 38.7 },
+  { title: 'Kamar Ortu', usage: 20.2 },
+];
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View className="flex-1 bg-black">
+      {/* Header */}
+      <View className="flex-row justify-between items-center px-5 py-4">
+        <Text className="text-white text-lg">Hello User</Text>
+        <View className="flex-row space-x-4">
+          <Text className="text-white text-xl">⚙️</Text>
+          <Text className="text-white text-xl">🔊</Text>
+        </View>
+      </View>
+
+      {/* Usage Info */}
+      <View className="items-center mt-4">
+        <Text className="text-white text-base">Total Usage Power</Text>
+        <Text className="text-white text-4xl font-bold">
+          ⚡ 287.89 <Text className="text-2xl">kWh</Text>
+        </Text>
+      </View>
+
+      {/* Room Cards */}
+      <ScrollView
+        className="flex-1 bg-white rounded-t-2xl mt-6"
+        contentContainerStyle={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          paddingVertical: 20,
+        }}
+      >
+        {rooms.map((room, index) => (
+          <TouchableOpacity
+            key={index}
+            className="w-48 h-48 bg-black m-2 rounded-xl items-center justify-center"
+          >
+            <Text className="text-white text-xl">⚡</Text>
+            <Text className="text-white text-">{room.usage} kWh</Text>
+            <Text className="text-white text-xl mt-1">{room.title}</Text>
+          </TouchableOpacity>
+        ))}
+
+        {/* Add Button */}
+        <TouchableOpacity className="w-48 h-48 bg-black m-2 rounded-xl items-center justify-center">
+          <View className="bg-white w-9 h-9 rounded-full items-center justify-center mb-1">
+            <Text className="text-black text-xl">+</Text>
+          </View>
+          <Text className="text-white text-xl">Tambah</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
